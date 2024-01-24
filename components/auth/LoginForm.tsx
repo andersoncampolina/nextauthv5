@@ -10,8 +10,14 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import FormError from '../FormError';
 import FormSuccess from '../FormSuccess';
+import { login } from '@/actions/login';
+import { useTransition } from 'react';
 
 export function LoginForm() {
+
+    const [isPending, startTransition] = useTransition();
+    const [error, setError] = React.useState<string | undefined>('')
+    const [success, setSuccess] = React.useState<string | undefined>('')
 
     const form = useForm<z.infer<typeof LoginSchema>>({
         resolver: zodResolver(LoginSchema),
@@ -22,7 +28,16 @@ export function LoginForm() {
     })
 
     const onSubmit = (values: z.infer<typeof LoginSchema>) => {
-        console.log(values)
+
+        setError(undefined);
+        setSuccess(undefined);
+
+        startTransition(() => {
+            login(values).then((res) => {
+                setError(res.error);
+                setSuccess(res.success);
+            })
+        })
     }
 
     return (
@@ -48,6 +63,7 @@ export function LoginForm() {
                                         <FormControl>
                                             <Input
                                                 {...field}
+                                                disabled={isPending}
                                                 placeholder='seu.email@exemplo.com'
                                                 type='email'
                                             />
@@ -65,6 +81,7 @@ export function LoginForm() {
                                         <FormControl>
                                             <Input
                                                 {...field}
+                                                disabled={isPending}
                                                 placeholder='******'
                                                 type='password'
                                             />
@@ -74,11 +91,11 @@ export function LoginForm() {
                                 )}
                             />
                         </div>
-                        <Button type='submit' className='w-full'>
+                        <Button disabled={isPending} type='submit' className='w-full'>
                             Login
                         </Button>
-                        <FormError message=""/>
-                        <FormSuccess message=""/>
+                        <FormError message={error}/>
+                        <FormSuccess message={success}/>
                     </form>
                 </Form>
             </CardWrapper>
