@@ -17,11 +17,11 @@ export default async function Home() {
             font.className,
           )}> 🔐 Auth </h1>
         <p className="text-white text-lg">
-          A simple authentication service
+          Um simples serviço de autenticação
         </p>
         <div>
           <LoginButton>
-            <Button variant="secondary" size="lg"> Sign in </Button>
+            <Button variant="secondary" size="lg"> Acessar </Button>
           </LoginButton>
         </div>
       </div>

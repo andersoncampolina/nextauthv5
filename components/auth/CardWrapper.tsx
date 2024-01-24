@@ -2,6 +2,7 @@ import React from 'react'
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Header } from '@/components/auth/Header';
 import { Social } from '@/components/auth/Social';
+import { BackButton } from '@/components/auth/BackButton';
 // import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 
 interface CardWrapperProps {
@@ -21,11 +22,17 @@ export function CardWrapper(props: CardWrapperProps) {
             <CardContent>
                 {props.children}
             </CardContent>
-            {/* {props.showSocial && (
+            {props.showSocial && (
                 <CardFooter>
                     <Social />
                 </CardFooter>
-            )} */}
+            )}
+            <CardFooter>
+                <BackButton
+                    label={props.backButtonLabel!}
+                    href={props.backButtonHref!}
+                />
+            </CardFooter>
         </Card>
     )
 }
