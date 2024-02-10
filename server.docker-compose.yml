@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  db-server:
+    image: postgres
+    ports:
+      - "5438:5432" # porta_servidor:porta_docker
+    container_name: "db-server"
+    restart: always # reinicia o DB apos o servidor reiniciar
+    volumes:
+      - ./db-server-backup:/var/lib/postgresql/data # cria backup do DB no servidor
+    environment:
+      POSTGRES_USER: pguser # Usuario do db: mudar no .env
+      POSTGRES_PASSWORD: pgpassword
+
+volumes:
+  db-server-backup: # nome da pasta que vai conter o backup do DB no servidor
