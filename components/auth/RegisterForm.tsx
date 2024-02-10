@@ -10,7 +10,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import FormError from '../FormError';
 import FormSuccess from '../FormSuccess';
-import { login } from '@/actions/login';
+import { register } from '@/actions/register';
 import { useTransition } from 'react';
 
 export function RegisterForm() {
@@ -34,7 +34,7 @@ export function RegisterForm() {
         setSuccess(undefined);
 
         startTransition(() => {
-            login(values).then((res) => {
+            register(values).then((res) => {
                 setError(res.error);
                 setSuccess(res.success);
             })
@@ -110,7 +110,7 @@ export function RegisterForm() {
                             />
                         </div>
                         <Button disabled={isPending} type='submit' className='w-full'>
-                            Login
+                            Criar Conta
                         </Button>
                         <FormError message={error}/>
                         <FormSuccess message={success}/>
