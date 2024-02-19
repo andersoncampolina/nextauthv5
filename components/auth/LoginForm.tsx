@@ -12,8 +12,12 @@ import FormError from '../FormError';
 import FormSuccess from '../FormSuccess';
 import { login } from '@/actions/login';
 import { useTransition } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 export function LoginForm() {
+
+    const searchParams = useSearchParams();
+    const urlError = searchParams.get('error') === "OAuthAccountNotLinked" ? "Sua conta não está vinculada a uma conta de email. Por favor, faça login com o mesmo provedor que você usou para se registrar." : "";
 
     const [isPending, startTransition] = useTransition();
     const [error, setError] = React.useState<string | undefined>('')
@@ -34,8 +38,8 @@ export function LoginForm() {
 
         startTransition(() => {
             login(values).then((res) => {
-                setError(res.error);
-                setSuccess(res.success);
+                setError(res?.error);
+                // setSuccess(res.success);
             })
         })
     }
@@ -94,7 +98,7 @@ export function LoginForm() {
                         <Button disabled={isPending} type='submit' className='w-full'>
                             Login
                         </Button>
-                        <FormError message={error}/>
+                        <FormError message={error || urlError}/>
                         <FormSuccess message={success}/>
                     </form>
                 </Form>
