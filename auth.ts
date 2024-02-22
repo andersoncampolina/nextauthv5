@@ -29,11 +29,25 @@ export const {
       }
     },
     callbacks: {
+
+      async signIn({ user, account }) {
+        // Allow OAuth without email verification
+        if (account?.provider !== 'credentials') return true
+        if (user.id) { 
+          const existingUser = await getUserById(user.id)
+          // Prevent signin without email verification
+          if (!existingUser?.emailVerified) return false  
+        }
+        // TODO: Add 2FA check
+        return true
+      },
+
       async session ({ token, session }) {
         if (token.sub && session.user) session.user.id = token.sub
         if (token.role && session.user) (session.user as any).role = token.role
         return session
       },
+
       async jwt({ token }) {
         if (!token.sub) return token // retorna o token caso o usuario nao esteja logado
         const existingUser = await getUserById(token.sub)
@@ -41,6 +55,7 @@ export const {
         token.role = existingUser.role // adiciona a role do usuario ao token 
         return token
       }
+
     },
     adapter: PrismaAdapter(db),
     session: { strategy: "jwt" },
