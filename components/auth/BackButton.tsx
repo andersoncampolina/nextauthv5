@@ -8,7 +8,7 @@ interface BackButtonProps {
     href: string;
 }
 
-export const BackButton = (props: BackButtonProps) => {
+export default function BackButton (props: BackButtonProps) {
     return (
         <Button 
             className='font-normal w-full'

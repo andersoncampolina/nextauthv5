@@ -1,9 +1,8 @@
 import React from 'react'
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
-import { Header } from '@/components/auth/Header';
-import { Social } from '@/components/auth/Social';
-import { BackButton } from '@/components/auth/BackButton';
-// import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
+import Header from '@/components/auth/Header';
+import Social from '@/components/auth/Social';
+import BackButton from '@/components/auth/BackButton';
 
 interface CardWrapperProps {
     children?: React.ReactNode;
@@ -13,7 +12,7 @@ interface CardWrapperProps {
     showSocial?: boolean;
 }
 
-export function CardWrapper(props: CardWrapperProps) {
+export default function CardWrapper(props: CardWrapperProps) {
     return (
         <Card className='w-[400px] shadow-md'>
             <CardHeader>

@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import { CardWrapper } from '@/components/auth/CardWrapper'
+import CardWrapper from '@/components/auth/CardWrapper'
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
@@ -13,7 +13,7 @@ import FormSuccess from '../FormSuccess';
 import { register } from '@/actions/register';
 import { useTransition } from 'react';
 
-export function RegisterForm() {
+export default function RegisterForm() {
 
     const [isPending, startTransition] = useTransition();
     const [error, setError] = React.useState<string | undefined>('')

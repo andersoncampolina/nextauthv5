@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useState } from 'react'
 import { BeatLoader } from 'react-spinners'
-import { CardWrapper } from '@/components/auth/CardWrapper'
+import CardWrapper from '@/components/auth/CardWrapper'
 import { useSearchParams } from 'next/navigation'
 import { newVerification } from '@/actions/newVerification'
 import FormError from '@/components/FormError'

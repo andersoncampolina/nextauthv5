@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import { CardWrapper } from '@/components/auth/CardWrapper'
+import CardWrapper from '@/components/auth/CardWrapper'
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
@@ -13,8 +13,9 @@ import FormSuccess from '../FormSuccess';
 import { login } from '@/actions/login';
 import { useTransition } from 'react';
 import { useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 
-export function LoginForm() {
+export default function LoginForm() {
 
     const searchParams = useSearchParams();
     const urlError = searchParams.get('error') === "OAuthAccountNotLinked" ? "Sua conta não está vinculada a uma conta de email. Por favor, faça login com o mesmo provedor que você usou para se registrar." : "";
@@ -90,6 +91,11 @@ export function LoginForm() {
                                                 type='password'
                                             />
                                         </FormControl>
+                                        <Button size='sm' variant='link' asChild className='px-0 font-normal'>
+                                            <Link href='/auth/reset'>
+                                                Forgot password?
+                                            </Link>
+                                        </Button>
                                         <FormMessage />
                                     </FormItem>
                                 )}
