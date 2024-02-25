@@ -19,6 +19,7 @@ export const LoginSchema = z.object({
         message: 'Preencha o email.',
     }),
     password: z.string().min(1, { message: 'Preencha o password.' }),
+    code: z.optional(z.string())
 })
 
 export const RegisterSchema = z.object({
