@@ -1,4 +1,3 @@
-import React from 'react'
 import { CheckCircledIcon } from '@radix-ui/react-icons';
 
 interface FormSuccessProps {

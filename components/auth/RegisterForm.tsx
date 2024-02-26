@@ -1,5 +1,4 @@
 'use client'
-import React from 'react'
 import CardWrapper from '@/components/auth/CardWrapper'
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -11,13 +10,13 @@ import { Button } from '@/components/ui/button';
 import FormError from '../FormError';
 import FormSuccess from '../FormSuccess';
 import { register } from '@/actions/register';
-import { useTransition } from 'react';
+import { useState, useTransition } from 'react';
 
 export default function RegisterForm() {
 
     const [isPending, startTransition] = useTransition();
-    const [error, setError] = React.useState<string | undefined>('')
-    const [success, setSuccess] = React.useState<string | undefined>('')
+    const [error, setError] = useState<string | undefined>('')
+    const [success, setSuccess] = useState<string | undefined>('')
 
     const form = useForm<z.infer<typeof RegisterSchema>>({
         resolver: zodResolver(RegisterSchema),

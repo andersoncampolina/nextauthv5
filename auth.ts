@@ -10,6 +10,7 @@ import { db } from "@/lib/db"
 import authConfig from "@/auth.config"
 import { getUserById } from "@/services/user"
 import { getTwoFactorConfirmationByUserId } from "@/services/twoFactorConfirmation"
+import { UserRole } from "@prisma/client"
 
 export const {
   handlers: { GET, POST },
@@ -51,7 +52,9 @@ export const {
 
     async session({ token, session }) {
       if (token.sub && session.user) session.user.id = token.sub
-      if (token.role && session.user) (session.user as any).role = token.role
+      if (token.role && session.user) session.user.role = token.role as UserRole
+      if (token.twoFactorEnabled && session.user) session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean
+
       return session
     },
 
@@ -60,6 +63,7 @@ export const {
       const existingUser = await getUserById(token.sub)
       if (!existingUser) return token // retorna o token caso o usuario nao exista
       token.role = existingUser.role // adiciona a role do usuario ao token 
+      token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled // adiciona a informacao de 2FA ao token
       return token
     }
 

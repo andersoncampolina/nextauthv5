@@ -1,5 +1,4 @@
 'use client'
-import React from 'react'
 import CardWrapper from '@/components/auth/CardWrapper'
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -10,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import FormError from '../FormError';
 import FormSuccess from '../FormSuccess';
 import { newPassword } from '@/actions/newPassword';
-import { useTransition } from 'react';
+import { useState, useTransition } from 'react';
 import { NewPasswordSchema } from '@/schemas';
 import { useSearchParams } from 'next/navigation';
 
@@ -20,8 +19,8 @@ export default function NewPasswordForm() {
     const token = searchParams.get('token');
 
     const [isPending, startTransition] = useTransition();
-    const [error, setError] = React.useState<string | undefined>('')
-    const [success, setSuccess] = React.useState<string | undefined>('')
+    const [error, setError] = useState<string | undefined>('')
+    const [success, setSuccess] = useState<string | undefined>('')
 
     const form = useForm<z.infer<typeof NewPasswordSchema>>({
         resolver: zodResolver(NewPasswordSchema),
