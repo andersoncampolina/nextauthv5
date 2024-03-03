@@ -100,7 +100,7 @@ export default function LoginForm() {
                                                     <Input
                                                         {...field}
                                                         disabled={isPending}
-                                                        placeholder='seu.email@exemplo.com'
+                                                        placeholder='email@exemplo.com'
                                                         type='email'
                                                     />
                                                 </FormControl>

@@ -2,7 +2,6 @@
  * Este arquivo é responsável por montar o objeto do token e sessao do usuario
  */
 
-
 import NextAuth from "next-auth"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 
@@ -11,6 +10,7 @@ import authConfig from "@/auth.config"
 import { getUserById } from "@/services/user"
 import { getTwoFactorConfirmationByUserId } from "@/services/twoFactorConfirmation"
 import { UserRole } from "@prisma/client"
+import { getAccountByUserId } from "./services/account"
 
 export const {
   handlers: { GET, POST },
@@ -53,7 +53,12 @@ export const {
     async session({ token, session }) {
       if (token.sub && session.user) session.user.id = token.sub
       if (token.role && session.user) session.user.role = token.role as UserRole
-      if (token.twoFactorEnabled && session.user) session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean
+      if (token.isTwoFactorEnabled && session.user) session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean
+      if (session.user) {
+        session.user.name = token.name
+        session.user.email = token.email!
+        session.user.isOAuth = token.isOAuth as boolean
+      }
 
       return session
     },
@@ -62,8 +67,16 @@ export const {
       if (!token.sub) return token // retorna o token caso o usuario nao esteja logado
       const existingUser = await getUserById(token.sub)
       if (!existingUser) return token // retorna o token caso o usuario nao exista
-      token.role = existingUser.role // adiciona a role do usuario ao token 
-      token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled // adiciona a informacao de 2FA ao token
+
+      const existingAccount = await getAccountByUserId(existingUser.id)
+
+      // adiciona as informacoes do usuario ao token
+      token.isOAuth = !!existingAccount
+      token.name = existingUser.name
+      token.email = existingUser.email
+      token.role = existingUser.role
+      token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled
+
       return token
     }
 

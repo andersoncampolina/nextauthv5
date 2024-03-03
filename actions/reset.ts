@@ -1,13 +1,14 @@
 'use server'
 
 import * as z from 'zod'
+
 import { sendPasswordResetEmail } from '@/lib/mail'
 import { generatePasswordResetToken } from '@/lib/tokens'
-
 import { ResetSchema } from "@/schemas"
 import { getUserByEmail } from "@/services/user"
 
 export const reset = async (values: z.infer<typeof ResetSchema>) => {
+
     const validatedFields = ResetSchema.safeParse(values)
 
     if (!validatedFields.success) return { error: 'Email inválido!' }
