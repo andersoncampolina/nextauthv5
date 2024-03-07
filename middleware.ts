@@ -18,10 +18,10 @@ export default auth((req) => {
     const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix)
     const isPublicRoute = publicRoutes.includes(nextUrl.pathname)
     const isAuthRoute = authRoutes.includes(nextUrl.pathname)
-    
+
     // Interrompe o middleware para rotas de API de autenticação, evitando processamento adicional.
     if (isApiAuthRoute) {
-        return; 
+        return;
     }
 
     // Redireciona usuários logados tentando acessar rotas de autenticação para a página padrão pós-login.
@@ -29,12 +29,18 @@ export default auth((req) => {
         if (isLoggedIn) {
             return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl))
         }
-        return; 
+        return;
     }
 
     // Para usuários não logados tentando acessar rotas não públicas, redireciona para a página de login.
     if (!isLoggedIn && !isPublicRoute) {
-        return Response.redirect(new URL("/auth/login", nextUrl))
+        let callBackUrl = nextUrl.pathname
+        if (nextUrl.search) {
+            callBackUrl += nextUrl.search
+        }
+        const encodedCallbackUrl = encodeURIComponent(callBackUrl)
+
+        return Response.redirect(new URL(`/auth/login?callbackUrl=${encodedCallbackUrl}`, nextUrl))
     }
 })
 

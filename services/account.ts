@@ -11,3 +11,15 @@ export const getAccountByUserId = async (userId: string) => {
         return null;
     }
 };
+
+export const deleteAccountByUserId = async (userId: string) => {
+    try {
+        await db.account.delete({
+            where: { userId }
+        });
+
+        return true;
+    } catch {
+        return false;
+    }
+}

@@ -27,3 +27,16 @@ export const getUserById = async (id: string) => {
         return null
     }
 }
+
+export const deleteUserById = async (id: string) => {
+    try {
+        await db.user.delete({
+            where: {
+                id,
+            }
+        })
+        return true
+    } catch (error) {
+        return false
+    }
+}

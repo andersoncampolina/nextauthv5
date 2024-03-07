@@ -4,6 +4,8 @@ export async function currentUser() {
 
     const session = await auth()
 
+    console.log(session)
+
     return session?.user
 }
 

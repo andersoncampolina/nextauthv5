@@ -18,6 +18,7 @@ import Link from 'next/link';
 export default function LoginForm() {
 
     const searchParams = useSearchParams();
+    const callbackUrl = searchParams.get('callbackUrl');
     const urlError = searchParams.get('error') === "OAuthAccountNotLinked" ? "Sua conta não está vinculada a uma conta de email. Por favor, faça login com o mesmo provedor que você usou para se registrar." : "";
 
     const [showTwoFactor, setShowTwoFactor] = useState(false)
@@ -39,7 +40,7 @@ export default function LoginForm() {
         setSuccess(undefined);
 
         startTransition(() => {
-            login(values).then((data) => {
+            login(values, callbackUrl).then((data) => {
                 if (data?.error) {
                     form.reset()
                     setError(data.error)

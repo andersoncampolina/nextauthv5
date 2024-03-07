@@ -9,7 +9,7 @@ interface UserInfoProps {
 
 export default function UserInfo(props: UserInfoProps) {
     return (
-        <Card className='w-[600px] shadow-md'>
+        <Card className='w-[430px] shadow-md'>
             <CardHeader>
                 <p className='text-2xl font-semibold text-center'>
                     {props.label}

@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react'
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import { useRouter } from 'next/navigation'
 
 import { settings } from '@/actions/settings'
 import { Button } from '@/components/ui/button'
@@ -18,9 +19,12 @@ import FormSuccess from '@/components/FormSuccess'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { UserRole } from '@prisma/client'
 import { Switch } from '@/components/ui/switch'
+import { deleteAccount } from '@/actions/deleteAccount'
+import { logout } from '@/actions/logout'
  
 export default function SettingsPage() {
 
+    const router = useRouter()
     const user = useCurrentUser()
     const [isPending, startTransition] = useTransition()
     const [error, setError] = useState<string | undefined>()
@@ -53,7 +57,21 @@ export default function SettingsPage() {
         })
     }
 
-    console.log(user?.isTwoFactorEnabled)
+    const handleDeletarContaClick = () => {
+        const confirmation = confirm('Você tem certeza que deseja deletar sua conta?')
+        if (!confirmation) return
+        startTransition(() => {
+            deleteAccount().then((data) => {
+                if (data.error) setError(data.error)
+                if (data.success) {
+                    setSuccess(data.success)
+                    logout()
+                }
+            }).catch((e) => {
+                setError('Algo deu errado!')
+            })
+        })
+    }
 
     return (
         <Card className="w-[430px]">
@@ -166,7 +184,10 @@ export default function SettingsPage() {
                         </div>
                         <FormError message={error}/>
                         <FormSuccess message={success}/>
-                        <Button type='submit' disabled={isPending}>Salvar</Button>
+                        <div className='flex justify-between'>
+                            <Button type='submit' disabled={isPending}>Salvar</Button>
+                            <Button type='button' onClick={handleDeletarContaClick} variant='destructive' disabled={isPending}>Deletar Conta</Button>
+                        </div>
                     </form>
                 </Form>
             </CardContent>

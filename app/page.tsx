@@ -10,7 +10,8 @@ const font = Poppins({
 
 export default async function Home() {
   return (
-    <main className="flex h-full flex-col items-center justify-center bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-500 to-black">      <div className="text-center space-y-6">
+    <main className="flex h-full flex-col items-center justify-center bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-500 to-black">
+      <div className="text-center space-y-6">
         <h1 className={cn(
             "text-6xl font-semibold text-white drop-shadow-md",
             font.className,
@@ -19,7 +20,7 @@ export default async function Home() {
           Um simples serviço de autenticação
         </p>
         <div>
-          <LoginButton>
+          <LoginButton mode='modal' asChild>
             <Button variant="secondary" size="lg"> Acessar </Button>
           </LoginButton>
         </div>
