@@ -38,3 +38,5 @@ next-env.d.ts
 
 # docker
 /db-dev-backup
+/db-dev-backup/
+db-dev-backup/
