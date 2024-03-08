@@ -1,11 +1,10 @@
 'use client'
 
-import { useTransition, useState, useEffect } from 'react'
+import { useTransition, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { useRouter } from 'next/navigation'
 
 import { settings } from '@/actions/settings'
 import { Button } from '@/components/ui/button'
@@ -21,10 +20,10 @@ import { UserRole } from '@prisma/client'
 import { Switch } from '@/components/ui/switch'
 import { deleteAccount } from '@/actions/deleteAccount'
 import { logout } from '@/actions/logout'
+import ChangePhotoButton from '@/components/auth/ChangePhotoButton'
  
 export default function SettingsPage() {
 
-    const router = useRouter()
     const user = useCurrentUser()
     const [isPending, startTransition] = useTransition()
     const [error, setError] = useState<string | undefined>()
@@ -58,6 +57,7 @@ export default function SettingsPage() {
     }
 
     const handleDeletarContaClick = () => {
+        // TODO: Melhorar a confirmação de deletar conta
         const confirmation = confirm('Você tem certeza que deseja deletar sua conta?')
         if (!confirmation) return
         startTransition(() => {
@@ -155,7 +155,6 @@ export default function SettingsPage() {
                                     />
                                 </>
                             )}
-
                             <FormField
                                 control={form.control}
                                 name='role'
@@ -186,6 +185,7 @@ export default function SettingsPage() {
                         <FormSuccess message={success}/>
                         <div className='flex justify-between'>
                             <Button type='submit' disabled={isPending}>Salvar</Button>
+                            <ChangePhotoButton />
                             <Button type='button' onClick={handleDeletarContaClick} variant='destructive' disabled={isPending}>Deletar Conta</Button>
                         </div>
                     </form>

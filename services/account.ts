@@ -14,8 +14,11 @@ export const getAccountByUserId = async (userId: string) => {
 
 export const deleteAccountByUserId = async (userId: string) => {
     try {
-        await db.account.delete({
+        const account = await db.account.findFirst({
             where: { userId }
+        });
+        await db.account.delete({
+            where: { id: account?.id }
         });
 
         return true;
