@@ -185,7 +185,7 @@ export default function SettingsPage() {
                         <FormSuccess message={success}/>
                         <div className='flex justify-between'>
                             <Button type='submit' disabled={isPending}>Salvar</Button>
-                            <ChangePhotoButton />
+                            {/* <ChangePhotoButton /> */}
                             <Button type='button' onClick={handleDeletarContaClick} variant='destructive' disabled={isPending}>Deletar Conta</Button>
                         </div>
                     </form>
