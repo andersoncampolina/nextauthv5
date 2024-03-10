@@ -15,7 +15,7 @@ const DialogPortal = DialogPrimitive.Portal
 const DialogClose = DialogPrimitive.Close
 
 interface DialogCustomProps {
-  onCloseModal: () => void
+  onCloseModal?: () => void
 }
 
 const DialogOverlay = React.forwardRef<
