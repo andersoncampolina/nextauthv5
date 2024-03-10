@@ -40,3 +40,17 @@ export const deleteUserById = async (id: string) => {
         return false
     }
 }
+
+export const updateUser = async (id: string, data: any) => {
+    try {
+        await db.user.update({
+            where: {
+                id,
+            },
+            data
+        })
+        return true
+    } catch (error) {
+        return false
+    }
+}

@@ -1,18 +1,23 @@
 'use client'
 
-import { logout } from '@/actions/logout'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
-import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import DragAndDrop from '../ui/drag-and-drop'
+import { useTransition } from 'react'
+import { uploadImage } from '@/actions/uploadImage'
+import { useSession } from 'next-auth/react'
 
 export default function ChangePhotoButton() {
 
-    const [isDialogOpen, setIsDialogOpen] = useState(false)
+    const { update } = useSession()
+ 
+    const [isPending, startTransition] = useTransition()
 
-    const onClick = () => {
-        console.log('CHANGE PHOTO')
-        setIsDialogOpen(true)
+    const handleFile = (formData: FormData) => {
+        startTransition(async() => {
+            await uploadImage(formData)
+            update()
+        })
     }
 
     return (
@@ -21,7 +26,7 @@ export default function ChangePhotoButton() {
                 <Button type='button' variant='outline'>Alterar foto</Button>          
             </DialogTrigger>
             <DialogContent>
-                <DragAndDrop />
+                <DragAndDrop getFile={(formData) => handleFile(formData)}/>
             </DialogContent>
         </Dialog>
     )
