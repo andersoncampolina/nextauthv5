@@ -22,8 +22,7 @@ export const uploadImage = async (formData: FormData) => {
                 reject(error)
                 return
             } else {
-                // TODO: Salvar a URL da imagem no banco de dados
-                console.log(result?.secure_url)
+                // Salva o endereco da foto no cloudinary do usuário no banco de dados
                 const user = await currentUser()
                 if (user && user.id) {
                     const dbUser = await getUserById(user.id)

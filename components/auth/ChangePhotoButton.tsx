@@ -1,3 +1,8 @@
+/**
+ * Este componente é um botão que abre um modal para o usuário alterar sua foto de perfil.
+ * Usei um componente personalizado de UI que isolei a logica para ser reaproveitado em outros lugares: <DragAndDrop>
+ */
+
 'use client'
 
 import { Dialog, DialogContent } from '@/components/ui/dialog'
@@ -27,14 +32,14 @@ export default function ChangePhotoButton() {
 
     return (
         <>
+            <Button onClick={() => setIsModalOpen(true)} type='button' variant='outline'>
+                Alterar foto
+            </Button>     
             <Dialog open={isModalOpen}>
                 <DialogContent onCloseModal={() => setIsModalOpen(false)}>
                     <DragAndDrop isPending={isPending} getFile={(formData) => handleFile(formData)}/>
                 </DialogContent>
-            </Dialog>
-            <Button onClick={() => setIsModalOpen(true)} type='button' variant='outline'>
-                Alterar foto
-            </Button>          
+            </Dialog>     
         </>
     )
 }

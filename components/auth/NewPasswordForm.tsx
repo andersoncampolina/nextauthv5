@@ -35,7 +35,6 @@ export default function NewPasswordForm() {
         setSuccess(undefined);
 
         startTransition(() => {
-            console.log('values', values, token);
             newPassword(values, token).then((res) => {
                 setError(res?.error);
                 setSuccess(res?.success);
