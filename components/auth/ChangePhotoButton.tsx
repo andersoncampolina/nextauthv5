@@ -27,10 +27,12 @@ export default function ChangePhotoButton() {
         <>
             <Dialog open={isModalOpen}>
                 <DialogContent onCloseModal={() => setIsModalOpen(false)}>
-                    <DragAndDrop getFile={(formData) => handleFile(formData)}/>
+                    <DragAndDrop isPending={isPending} getFile={(formData) => handleFile(formData)}/>
                 </DialogContent>
             </Dialog>
-            <Button onClick={() => setIsModalOpen(true)} type='button' variant='outline'>Alterar foto</Button>          
+            <Button onClick={() => setIsModalOpen(true)} type='button' variant='outline'>
+                Alterar foto
+            </Button>          
         </>
     )
 }

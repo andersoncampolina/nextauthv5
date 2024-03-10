@@ -5,6 +5,7 @@ import { IoCloudUploadOutline } from "react-icons/io5";
 
 interface DragAndDropProps {
   getFile?(formData: FormData): void;
+  isPending?: boolean;
 }
 
 const DragAndDrop = (props: DragAndDropProps) => {
@@ -49,7 +50,14 @@ const DragAndDrop = (props: DragAndDropProps) => {
         ))}
         <ul>{filesList}</ul>
       </aside>
-      <Button onClick={() => getFile(acceptedFiles[0])} className={`m-5 ${!acceptedFiles[0] && 'hidden'}`} type='button'>Enviar</Button>
+      <Button
+        disabled={props.isPending} 
+        onClick={() => getFile(acceptedFiles[0])} 
+        className={`m-5 ${!acceptedFiles[0] && 'hidden'}`} 
+        type='button'
+      >
+        Enviar
+      </Button>
     </>
   );
 }
