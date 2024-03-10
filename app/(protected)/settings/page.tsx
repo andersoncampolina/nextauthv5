@@ -141,7 +141,7 @@ export default function SettingsPage() {
                                         name='isTwoFactorEnabled'
                                         render={({ field }) => (
                                             <FormItem className='flex fle-row items-center justify-between rounded-lg border p-3 shadow-sm'>
-                                                <div className='space-y-0.5'>
+                                                <div className='space-y-0.5 p-1'>
                                                     <FormLabel>Fator de 2 passos para autenticação</FormLabel>
                                                     <FormDescription>
                                                         Habilite o 2FA (Fator de 2 passos para autenticação) para sua conta

@@ -1,11 +1,12 @@
 'use client'
 
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
+import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import DragAndDrop from '../ui/drag-and-drop'
 import { useTransition, useState } from 'react'
 import { uploadImage } from '@/actions/uploadImage'
 import { useSession } from 'next-auth/react'
+import { toast } from "sonner"
 
 export default function ChangePhotoButton() {
 
@@ -20,6 +21,7 @@ export default function ChangePhotoButton() {
             await uploadImage(formData)
             update()
             setIsModalOpen(false)
+            toast.success('Foto alterada com sucesso!')
         })
     }
 
