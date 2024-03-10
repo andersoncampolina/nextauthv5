@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FileWithPath, useDropzone } from 'react-dropzone';
 import { Button } from '@/components/ui/button';
+import { IoCloudUploadOutline } from "react-icons/io5";
 
 interface DragAndDropProps {
   getFile?(formData: FormData): void;
@@ -18,7 +19,7 @@ const DragAndDrop = (props: DragAndDropProps) => {
   }, [acceptedFiles]);
 
   const filesList = acceptedFiles.map((file: FileWithPath, index) => (
-    <li key={index}>
+    <li key={index} className='text-xs text-center pt-2'>
       {file.path} - {file.size} bytes
     </li>
   ));
@@ -33,19 +34,22 @@ const DragAndDrop = (props: DragAndDropProps) => {
 
   return (
     <>
-      <section className="flex-col border-2 border-dashed rounded p-5 m-5">
+      <section className="flex-col border-2 border-dashed border-neutral-400 rounded p-5 m-5 mb-0 bg-slate-200">
         <div {...getRootProps({className: 'dropzone'})}>
-          <input name='image' {...getInputProps()} />
-          <p className='text-center'>Arraste e solte uma foto aqui, ou clique para selecionar!</p>
+          <div className='flex flex-col items-center gap-3'>
+            <input name='image' {...getInputProps()} />
+            <p className='text-center'>Arraste e solte uma foto aqui, ou clique neste espaço para selecionar...</p>
+            <IoCloudUploadOutline size={25}/>
+          </div>
         </div>
       </section>
-      <aside className='m-5'>
+      <aside className='m-5 mb-0'>
         {images.map((image, index) => (
           <img key={index} src={image} alt="Preview" style={{ width: '100%', maxWidth: '500px', height: 'auto' }} />
         ))}
         <ul>{filesList}</ul>
       </aside>
-      <Button onClick={() => getFile(acceptedFiles[0])} className='m-5' type='button'>Enviar</Button>
+      <Button onClick={() => getFile(acceptedFiles[0])} className={`m-5 ${!acceptedFiles[0] && 'hidden'}`} type='button'>Enviar</Button>
     </>
   );
 }
