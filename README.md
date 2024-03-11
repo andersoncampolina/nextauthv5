@@ -1,3 +1,13 @@
+# Passo a passo para iniciar a aplicacao:
+1 - npm install
+2 - instalar o docker engine + docker compose na sua maquina
+3 - docker compose up -d 
+4 - npx prisma generate
+5 - npx prisma db push
+6 - Pegar API keys necessarias para rodar o app no resend (envio de emails) e cloudinary (data bucket), Github e Google (OAuth).
+7 - Colocar api keys no .env de acordo com o .env.example
+8 - npm run dev
+
 # Docker Postgres
 
 Execute o docker.app no macos, e crie um docker-compose.yml na raiz do projeto com a seguinte configuracao: 
